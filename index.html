@@ -11,42 +11,40 @@
     <h1 class="text-center">EV vs ICE Cost Comparison</h1>
     <div class="container">
         <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="distance">Distance (km):</label>
+                    <input type="number" id="distance" name="distance" value="1000" class="form-control" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-6">
                 <h2>Electric Vehicle (EV)</h2>
-                    <form id="ev-form" class="form-inline">
-                        <div class="form-group">
-                            <label for="car-name">Car Name:</label>
-                            <input type="text" id="car-name" name="car-name" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="real-world-range">Real World Range (km):</label>
-                            <input type="number" id="real-world-range" name="real-world-range" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="battery-capacity">Battery Capacity (kWh):</label>
-                            <input type="number" id="battery-capacity" name="battery-capacity" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="unit-charge-cost">Unit Charge Cost (SEK/kWh):</label>
-                            <input type="number" id="unit-charge-cost" name="unit-charge-cost" class="form-control" required step="0.01">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="parking-cost">Parking Cost per Hour (SEK):</label>
-                            <input type="number" id="parking-cost" name="parking-cost" class="form-control" required step="0.01">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="speed-of-charge">Speed of Charge (kWh/h):</label>
-                            <input type="number" id="speed-of-charge" name="speed-of-charge" class="form-control" required>
-                        </div>
-    
-                        <button type="submit" class="btn btn-primary" id="ev-form-submit-btn">Calculate Cost</button>
-                    </form>
-                <div id="ev-results"></div>
+                <form id="ev-form" class="form-inline">
+                    <div class="form-group">
+                        <label for="car-name">Car Name:</label>
+                        <input type="text" id="car-name" name="car-name" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="real-world-range">Real World Range (km):</label>
+                        <input type="number" id="real-world-range" name="real-world-range" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="battery-capacity">Battery Capacity (kWh):</label>
+                        <input type="number" id="battery-capacity" name="battery-capacity" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="unit-charge-cost">Unit Charge Cost (SEK/kWh):</label>
+                        <input type="number" id="unit-charge-cost" name="unit-charge-cost" class="form-control" required step="0.01">
+                    </div>
+                
+                    <button type="submit" class="btn btn-primary" id="ev-form-submit-btn">Calculate Cost</button>
+                </form>
+                
             </div>
             <div class="col-md-6">
                 <h2>Internal Combustion Engine (ICE)</h2>
@@ -66,17 +64,21 @@
                         <input type="number" id="cost-per-litre" name="cost-per-litre" class="form-control" required step="0.01">
                     </div>
 
-                    <div class="form-group">
-                        <label for="fuel-tank-capacity">Fuel Tank Capacity (l):</label>
-                        <input type="number" id="fuel-tank-capacity" name="fuel-tank-capacity" class="form-control" required>
-                    </div>
-
                     <button type="submit" class="btn btn-primary" id="ice-form-submit-btn">Calculate Cost</button>
                 </form>
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div id="ev-results"></div>
+            </div>
+            <div class="col-md-6">
                 <div id="ice-results"></div>
             </div>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>

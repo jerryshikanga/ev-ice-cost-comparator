@@ -4,53 +4,56 @@ const evResults = document.getElementById('ev-results');
 const iceForm = document.getElementById('ice-form');
 const iceResults = document.getElementById('ice-results');
 
-function calculateEvCosts(carName, realWorldRange, batteryCapacity, unitChargeCost, parkingCost, speedOfCharge){
+// Common function to get distance from the form
+function getDistance() {
+    return parseFloat(document.getElementById('distance').value);
+}
+
+function calculateEvCosts(carName, realWorldRange, batteryCapacity, unitChargeCost, distance){
+  const kwhPerKm = batteryCapacity / realWorldRange;
+
+  const totalkwh = kwhPerKm * distance;
+
   // Calculate charging cost
   const chargingCost = batteryCapacity * unitChargeCost;
 
-  // Calculate parking cost per charge
-  const parkingCostPerCharge = (batteryCapacity / speedOfCharge) * parkingCost;
-
-  // Calculate total cost per charge (charging + parking)
-  const totalCostPerCharge = chargingCost + parkingCostPerCharge;
-
   // Calculate cost per kilometer
-  const costPerKm = totalCostPerCharge / realWorldRange;
+  const costPerKm = chargingCost / realWorldRange;
 
-  // Calculate cost for 1000 km
-  const costFor1000km = costPerKm * 1000;
+  // Calculate cost for distance
+  const costForDistance = costPerKm * distance;
 
-  // Display results
-  evResults.innerHTML = `<h3>${carName} Results</h3>
+    document.getElementById('ev-results').innerHTML = `
+    <h3>${carName} Results</h3>
     <ul>
-        <li>Charging Cost: ${chargingCost.toFixed(2)} SEK</li>
-        <li>Parking Cost (per charge): ${parkingCostPerCharge.toFixed(2)} SEK</li>
-        <li>Total Cost (per charge): ${totalCostPerCharge.toFixed(2)} SEK</li>
-        <li>Cost per Kilometer: ${costPerKm.toFixed(2)} SEK/km</li>
-        <li>Estimated Cost for 1000km: ${costFor1000km.toFixed(2)} SEK</li>
+        <li>Total Cost : ${costForDistance.toFixed(2)} SEK</li>
+        <li>Distance: ${distance} km</li>
+        <li>Total Kwh: ${totalkwh} kwh</li>
+        <li>Cost per Kilometer: ${(costForDistance / distance).toFixed(2)} SEK/km</li>
     </ul>`;
 }
 
-function calculcateIceCosts(carName, fuelConsumption, costPerLitre, fuelTankCapacity){
+function calculcateIceCosts(carName, fuelConsumption, costPerLitre, distance){
   // Calculate total litres needed for 1000 km
-  const totalLitres = 1000 / fuelConsumption;
+  const totalLitres = distance / fuelConsumption;
 
   // Calculate total cost for 1000 km
   const totalCost = totalLitres * costPerLitre;
 
   // Calculate cost per kilometer
-  const costPerKm = totalCost / 1000;
+  const costPerKm = totalCost / distance;
 
-  // Calculate number of refills needed
-  const numRefills = Math.ceil(totalLitres / fuelTankCapacity);
+  // Calculate cost for distance
+  const costForDistance = costPerKm * distance;
 
   // Display results
-  iceResults.innerHTML = `<h3>${carName} Results</h3>
+  iceResults.innerHTML = `
+    <h3>${carName} Results</h3>
     <ul>
-        <li>Total Litres for 1000km: ${totalLitres.toFixed(2)} L</li>
-        <li>Total Cost for 1000km: ${totalCost.toFixed(2)} SEK</li>
+        <li>Total Cost : ${costForDistance.toFixed(2)} SEK</li>
+        <li>Distance : ${distance} km</li>
+        <li>Total Litres : ${totalLitres.toFixed(2)} L</li>
         <li>Cost per Kilometer: ${costPerKm.toFixed(2)} SEK/km</li>
-        <li>Number of Refills Needed: ${numRefills}</li>
     </ul>`;
 }
 
@@ -61,10 +64,9 @@ evForm.addEventListener('submit', function(event) {
   const realWorldRange = parseFloat(document.getElementById('real-world-range').value);
   const batteryCapacity = parseFloat(document.getElementById('battery-capacity').value);
   const unitChargeCost = parseFloat(document.getElementById('unit-charge-cost').value);
-  const parkingCost = parseFloat(document.getElementById('parking-cost').value);
-  const speedOfCharge = parseFloat(document.getElementById('speed-of-charge').value);
+  const distance = getDistance();
 
-  calculateEvCosts(carName, realWorldRange, batteryCapacity, unitChargeCost, parkingCost, speedOfCharge)
+  calculateEvCosts(carName, realWorldRange, batteryCapacity, unitChargeCost, distance)
 });
 
 iceForm.addEventListener('submit', function(event) {
@@ -73,7 +75,7 @@ iceForm.addEventListener('submit', function(event) {
   const carName = document.getElementById('ice-car-name').value;
   const fuelConsumption = parseFloat(document.getElementById('fuel-consumption').value);
   const costPerLitre = parseFloat(document.getElementById('cost-per-litre').value);
-  const fuelTankCapacity = parseFloat(document.getElementById('fuel-tank-capacity').value);
+  const distance = getDistance();
 
-  calculcateIceCosts(carName, fuelConsumption, costPerLitre, fuelTankCapacity);
+  calculcateIceCosts(carName, fuelConsumption, costPerLitre, distance);
 });
