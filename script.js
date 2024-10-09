@@ -28,7 +28,7 @@ function calculateEvCosts(carName, realWorldRange, batteryCapacity, unitChargeCo
     <ul>
         <li>Total Cost : ${costForDistance.toFixed(2)} SEK</li>
         <li>Distance: ${distance} km</li>
-        <li>Total Kwh: ${totalkwh} kwh</li>
+        <li>Total Kwh: ${totalkwh.toFixed(2)} kwh</li>
         <li>Cost per Kilometer: ${(costForDistance / distance).toFixed(2)} SEK/km</li>
     </ul>`;
 }
